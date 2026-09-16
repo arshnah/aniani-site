@@ -156,7 +156,9 @@ h1 {
   width: 96px;
   height: 136px;
   border-radius: 5px;
-  background: linear-gradient(160deg, var(--art-a), var(--art-b));
+  object-fit: cover;
+  display: block;
+  background: var(--surface);
   border: 1px solid var(--line);
   transition: transform 0.12s ease, border-color 0.12s ease;
 }
