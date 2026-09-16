@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aniani</title>
+<meta name="description" content="A desktop GUI for searching, watching, and downloading anime. Discover dashboard, resume-from-timestamp, AniList sync, Discord Rich Presence, a manga/comic/ebook reader. Rust, egui.">
+<meta property="og:title" content="aniani">
+<meta property="og:description" content="A desktop GUI for searching, watching, and downloading anime. Rust, egui, no Electron.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0a0d'/%3E%3Cpath d='M9 22 L16 8 L23 22 M12 17 L20 17' stroke='%23d9668c' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<section class="hero">
+  <div class="scan" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="brand">aniani</div>
+    <h1 class="glow">Search, watch, and download anime.</h1>
+    <div class="sub">A desktop GUI, not a browser tab or an Electron wrapper. Discover dashboard, resume-from-timestamp, AniList sync, Discord Rich Presence, and a manga/comic/ebook reader built in. Rust, egui/eframe.</div>
+    <div class="badges">
+      <span class="badge">Rust</span>
+      <span class="badge">egui</span>
+      <span class="badge">Linux</span>
+      <span class="badge">Windows</span>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">▾</div>
+</section>
+
+<div class="wrap">
+  <div class="presence">
+    <div class="presence-body">
+      <div class="presence-label">Watching aniani</div>
+      <div class="presence-card">
+        <div class="presence-cover" aria-hidden="true"></div>
+        <div class="presence-text">
+          <div class="presence-title">Cowboy Bebop</div>
+          <div class="presence-sub">Episode 5</div>
+          <div class="presence-bar"><div class="presence-bar-fill"></div></div>
+          <div class="presence-time"><span>10:24</span><span>22:10</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <section>
+    <h2>what it does</h2>
+    <p>A discover dashboard -- Continue Watching, Trending, and Popular cover-art rows, click one to jump straight to search -- then an episode list, then play, with resume-from-timestamp. AniList tracker sync and Discord Rich Presence built in, not bolted on after.</p>
+    <p>This is a full Rust rewrite of an earlier Python/PyQt6 version, not a port. Confirmed the actual perf gap before claiming one: same egui code, unoptimized debug build vs. release, showed multi-second slow-frame stalls decoding cover art on startup in debug and zero in release.</p>
+  </section>
+
+  <section>
+    <h2>sources</h2>
+    <div class="box">
+      <div class="row"><div class="k2">anidb.app</div><div class="v2">default, scraped directly via curl-impersonate</div></div>
+      <div class="row"><div class="k2">aniwatchtv.to</div><div class="v2">search and episode listing; stream resolution not implemented, tracked in TODO.txt</div></div>
+      <div class="row"><div class="k2">nyaa.si</div><div class="v2">torrent RSS search, streamed through qbittorrent-nox or downloaded fully for offline viewing</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>features</h2>
+    <div class="grid">
+      <div class="card"><b>mpv / VLC</b><span>Switchable from the top bar. mpv over its JSON IPC socket, VLC over its HTTP control interface with a fresh random port and password every launch.</span></div>
+      <div class="card"><b>Downloads &amp; offline</b><span>ffmpeg remuxes HLS to mp4, live progress from ffmpeg's own pipe, cancellable. A library of what's already saved, playable with no network at all.</span></div>
+      <div class="card"><b>AniList sync</b><span>Two-way. Optional push on finishing an episode, off by default. Pull happens automatically once connected.</span></div>
+      <div class="card"><b>Discord Rich Presence</b><span>Cover art, live elapsed time, and a watch link, during playback -- plus a manual movie/TV tracker for anything you're watching outside aniani.</span></div>
+      <div class="card"><b>Manga &amp; book reader</b><span>CBZ, CBR, PDF, EPUB, and MangaDex's own public API, in the same app.</span></div>
+      <div class="card"><b>Continue watching</b><span>Built from local watch history. Clicking a card plays straight from disk if that episode's already downloaded, no re-resolving a live stream.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>install</h2>
+    <p>Grab the latest build from <a href="https://github.com/arshnah/aniani/releases/latest" rel="noopener">Releases</a> -- Windows gets <code class="mono">aniani.exe</code>, Linux gets a tarball. Either way you'll also want <code class="mono">mpv</code>/<code class="mono">vlc</code>, <code class="mono">ffmpeg</code>, <code class="mono">curl_chrome136</code>, and <code class="mono">qbittorrent-nox</code> on PATH. Building from source instead:</p>
+    <pre class="code"><span class="c1"># clone and build</span>
+git clone --branch rust-remake https://github.com/arshnah/aniani.git
+cd aniani
+cargo build --release</pre>
+  </section>
+
+  <section>
+    <h2>platform support</h2>
+    <p>Built and daily-driven on Linux (Arch/Hyprland). Windows compiles and runs on real hardware, confirmed on two separate machines. macOS is untested and not a current target.</p>
+  </section>
+
+  <footer>
+    <a href="https://github.com/arshnah/aniani" rel="noopener">source on GitHub</a><br>
+    <a href="https://arshnah.in">arshnah.in</a>
+  </footer>
+</div>
+</body>
+</html>
